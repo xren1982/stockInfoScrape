@@ -33,7 +33,11 @@ class NasdaqSpider(scrapy.Spider):
                 stockname = df['stockname'].at[i]
                 stockDetailURL = stockDetailURLTemplate.replace('stockname',stockname)
                 request = response.follow(stockDetailURL, callback = self.getContent)
-                yield request 
+                yield request
+        
+        stockDetailURL = 'https://api.nasdaq.com/api/quote/shop/historical?assetclass=stocks&fromdate=2019-05-19&limit=5&todate='+currentday
+        request = response.follow(stockDetailURL, callback = self.getContent)
+        yield request 
         
     def getContent(self, response):
         try:
